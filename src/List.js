@@ -4,15 +4,13 @@ import styled from 'styled-components';
 import add from './store/actions/add.js'
 import {useDispatch} from "react-redux";
 import {useState} from "react";
+import {flexLayout} from "./sass/mixins";
 
 const Con = styled.div`
   text-align: center;
-
   .con {
-    display: flex;
+    ${flexLayout()}
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
     width: 100%;
     background-color: white;
 
@@ -31,31 +29,30 @@ const Con = styled.div`
       }
     }
   }
-
-  .addition {
-    display: flex;
-    flex-direction: column;
+  .addition{
+    ${flexLayout('column')}
     width: 50%;
     min-width: 300px;
     margin: 1rem auto;
-
-    input, button {
+    input,button {
       color: black;
       font-size: 2rem;
+      margin-top: .5rem;
       @media (max-width: 375px) {
         font-size: 1.5rem;
       }
     }
-
-    button {
+    button{
       background-color: darkgray;
       border: none;
       border-radius: 4px;
-
-      &:hover {
+      &:hover{
         cursor: pointer;
         background-color: lightskyblue;
       }
+    }
+    .add{
+      padding: 1rem;
     }
   }
 `
@@ -65,16 +62,20 @@ const List = ({numbers, setSelected, selected}) => {
     const [name, setName] = useState("")
     const [phone, setPhone] = useState("")
 
-    const addItem = () => {
-        if (!name || !phone) {
+    const addItem = ()=>{
+        if(!name || !phone){
             alert("Please fill name and number fields")
             return;
         }
-        dispatch(add({
-            name,
-            number: phone,
-            id: Number(selected.id) + 1
-        }))
+        if(isNaN(Number(phone))) {
+            alert('Please enter numeric value for number');
+            return
+        }
+         dispatch(add({
+             name,
+             number: phone,
+             id: Math.floor(1000 + Math.random() * 9000)
+         }))
     }
 
     return (
@@ -82,15 +83,13 @@ const List = ({numbers, setSelected, selected}) => {
         <Con>
             <h3>Please select contact to view number</h3>
             <div className="con">
-                {numbers.map(num => <button key={num.name}
-                                            style={{backgroundColor: num.id === selected.id ? 'green' : 'indigo'}}
-                                            onClick={() => setSelected(num)}>{num.name}</button>)}
+                {numbers.map(num => <button key={num.name} style={{backgroundColor: num.id === selected.id ? 'green' : 'indigo'}} onClick={()=> setSelected(num)}>{num.name}</button>)}
             </div>
-            {!Object.keys(selected).length ?
+            { !Object.keys(selected).length ?
                 <div className="addition">
-                    <input onChange={e => setName(e.target.value)} placeholder="Name"/>
-                    <input onChange={e => setPhone(e.target.value)} placeholder="Number"/>
-                    <button onClick={addItem}>Add</button>
+                    <input onChange={ e=>setName(e.target.value)} placeholder="Name"/>
+                    <input onChange={ e=>setPhone(e.target.value)} placeholder="Number"/>
+                    <button className="add" onClick={addItem}>Add</button>
                 </div>
                 :
                 null

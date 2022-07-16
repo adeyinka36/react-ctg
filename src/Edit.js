@@ -4,6 +4,7 @@ import {useState} from "react";
 import {useDispatch} from "react-redux";
 import deleteItem from './store/actions/del.js';
 import editItem from "./store/actions/edit";
+import {flexLayout} from "./sass/mixins";
 
 const Con = styled.div`
   position: fixed;
@@ -11,10 +12,7 @@ const Con = styled.div`
   background-color: lightsteelblue;
   bottom: ${props => props.styles.bottom};
   transition: bottom 1s ease-out;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  ${flexLayout('column')}
   width: 100%;
 
   button {
@@ -58,6 +56,10 @@ const Edit = props => {
             alert("Please fill name and number fields")
             return;
         }
+        if(isNaN(Number(phone))) {
+            alert('Please enter numeric value for number');
+            return
+        }
         let edited = {
             name,
             number: phone,
@@ -85,9 +87,9 @@ const Edit = props => {
                 :
                 <>
                     <p>Edit Details Below:</p>
-                    <input onChange={e => setName(e.target.value)} defaultValue={props.selected.name}/>
+                    <input onChange={e => setName(e.target.value)} placeholder={props.selected.name}/>
                     <br/>
-                    <input onChange={e => setPhone(e.target.value)} defaultValue={props.selected.number}/>
+                    <input onChange={e => setPhone(e.target.value)} placeholder={props.selected.number}/>
                     <button onClick={submit}>Submit</button>
                     <button onClick={del} className="delete">Remove</button>
                 </>
