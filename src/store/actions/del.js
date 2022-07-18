@@ -1,6 +1,8 @@
+import {DELETE} from "./actionTypes";
+
 const del = (item) =>{
     return {
-        type: 'DELETE',
+        type: DELETE,
         payload: item
     }
 }

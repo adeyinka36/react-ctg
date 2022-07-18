@@ -4,7 +4,7 @@ import {useState} from "react";
 import {useDispatch} from "react-redux";
 import deleteItem from './store/actions/del.js';
 import editItem from "./store/actions/edit";
-import {flexLayout} from "./sass/mixins";
+import {flexLayout, buttonStyles} from "./sass/mixins";
 
 const Con = styled.div`
   position: fixed;
@@ -16,14 +16,8 @@ const Con = styled.div`
   width: 100%;
 
   button {
-    height: 3rem;
-    min-width: 7rem;
+    ${buttonStyles()}
     background-color: indigo;
-    color: white;
-    border-radius: 4px;
-    box-shadow: none;
-    margin: .5rem;
-    border: 1px solid white;
 
     &:hover {
       background-color: darkmagenta;
@@ -40,6 +34,7 @@ const Con = styled.div`
     font-size: 2rem;
     @media (max-width: 375px) {
       font-size: 1.5rem;
+      max-width: 200px;
     }
 
   }
@@ -77,7 +72,7 @@ const Edit = props => {
         props.setSelected({})
     }
     return (
-        <Con styles={props.allStyles}>
+        <Con styles={props.clickedColor}>
             {!editMode ?
                 <>
                     <p>Name: {props.selected.name}</p>
@@ -101,7 +96,8 @@ const Edit = props => {
 
 Edit.propTypes = {
     selected: PropTypes.object.isRequired,
-    allStyles: PropTypes.object.isRequired,
+    setSelected: PropTypes.func.isRequired,
+    clickedColor: PropTypes.object.isRequired,
 }
 
 export default Edit;

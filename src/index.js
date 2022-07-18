@@ -8,7 +8,7 @@ import {Provider} from "react-redux";
 
 let initialState = [{
     id: 1,
-    name: 'Yinka',
+    name: 'Paul',
     number: '075357832245',
     selected: false
 },

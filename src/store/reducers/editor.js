@@ -1,12 +1,14 @@
+import {ADD, DELETE, EDIT} from "../actions/actionTypes";
+
 const editorReducer = (state = []
     , action) => {
     switch (action.type) {
-        case "ADD":
+        case ADD:
             return [...state, action.payload];
-        case "EDIT":
+        case EDIT:
             let filtered = state.filter(item => item.id !== action.payload.id);
             return [...filtered, action.payload];
-        case "DELETE":
+        case DELETE:
             return state.filter(item => item.id !== action.payload.id);
         default:
             return state;

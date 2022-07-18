@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import add from './store/actions/add.js'
 import {useDispatch} from "react-redux";
 import {useState} from "react";
-import {flexLayout} from "./sass/mixins";
+import {flexLayout, buttonStyles} from "./sass/mixins";
 
 const Con = styled.div`
   text-align: center;
@@ -13,16 +13,9 @@ const Con = styled.div`
     flex-wrap: wrap;
     width: 100%;
     background-color: white;
-
+  
     button {
-      height: 3rem;
-      min-width: 7rem;
-      color: white;
-      border-radius: 4px;
-      box-shadow: none;
-      margin: .5rem;
-      border: 1px solid white;
-
+      ${buttonStyles()}
       &:hover {
         background-color: darkmagenta;
         cursor: pointer;
@@ -32,12 +25,16 @@ const Con = styled.div`
   .addition{
     ${flexLayout('column')}
     width: 50%;
-    min-width: 300px;
+    width: 300px;
     margin: 1rem auto;
+    @media (max-width: 375px) {
+      width: 200px;
+    }
     input,button {
       color: black;
       font-size: 2rem;
       margin-top: .5rem;
+      width: 100%;
       @media (max-width: 375px) {
         font-size: 1.5rem;
       }
@@ -100,5 +97,7 @@ const List = ({numbers, setSelected, selected}) => {
 
 List.propTypes = {
     numbers: PropTypes.array.isRequired,
+    setSelected: PropTypes.func.isRequired,
+    selected: PropTypes.object.isRequired,
 }
 export default List;

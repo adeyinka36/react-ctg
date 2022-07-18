@@ -10,7 +10,7 @@ const App = () => {
     return (
         <>
             <List numbers={numbers} setSelected={setSelected} selected={selected}/>
-            <Edit allStyles={{bottom: selected.name ? '0': '-100%'}} selected={selected} setSelected={setSelected}/>
+            <Edit clickedColor={{bottom: Object.keys(selected).length ? '0': '-100%'}} selected={selected} setSelected={setSelected}/>
         </>
     );
 };
